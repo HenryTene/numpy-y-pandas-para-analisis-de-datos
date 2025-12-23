@@ -1,6 +1,6 @@
 import { Header } from '@/components/layout/Header';
 import { Sidebar } from '@/components/layout/Sidebar';
-import { DiagnosticModule } from '@/components/modules/DiagnosticModule';
+import { UVModule } from '@/components/modules/UVModule';
 import { NumPyModule } from '@/components/modules/NumPyModule';
 import { PandasModule } from '@/components/modules/PandasModule';
 import { CleaningModule } from '@/components/modules/CleaningModule';
@@ -8,7 +8,6 @@ import { ProjectModule } from '@/components/modules/ProjectModule';
 import { ClosingModule } from '@/components/modules/ClosingModule';
 import { useProgress } from '@/hooks/useProgress';
 import { toast } from 'sonner';
-import { useEffect } from 'react';
 
 const Index = () => {
   const {
@@ -34,13 +33,6 @@ const Index = () => {
     resetStreak();
   };
 
-  const handleDiagnosticComplete = (score: number) => {
-    completeDiagnostic(score);
-    setCurrentModule('numpy');
-    toast.success('¡Diagnóstico completado!', {
-      description: `Puntuación: ${score}/5`,
-    });
-  };
 
   const handleCleaningComplete = () => {
     unlockBadge('data_cleaner');
@@ -67,14 +59,8 @@ const Index = () => {
 
   const renderModule = () => {
     switch (progress.currentModule) {
-      case 'diagnostico':
-        return (
-          <DiagnosticModule
-            onComplete={handleDiagnosticComplete}
-            isCompleted={progress.diagnosticCompleted}
-            score={progress.quizScore}
-          />
-        );
+      case 'uv-intro':
+        return <UVModule />;
       case 'numpy':
         return (
           <NumPyModule

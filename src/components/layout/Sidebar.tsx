@@ -10,8 +10,8 @@ interface SidebarProps {
 
 export function Sidebar({ currentModule, completedExercises, onModuleSelect }: SidebarProps) {
   const getModuleStatus = (moduleId: string, index: number) => {
-    // Diagnostic is always available
-    if (moduleId === 'diagnostico') return 'available';
+    // UV intro is always available
+    if (moduleId === 'uv-intro') return 'available';
     
     // Check if previous modules are completed (simplified logic)
     const prevModuleIndex = index - 1;
@@ -86,7 +86,7 @@ export function Sidebar({ currentModule, completedExercises, onModuleSelect }: S
                     {module.title}
                   </p>
                   <p className="text-xs text-muted-foreground truncate">
-                    {module.duration}
+                    {module.description}
                   </p>
                   
                   {/* Progress bar for modules with exercises */}
@@ -109,10 +109,11 @@ export function Sidebar({ currentModule, completedExercises, onModuleSelect }: S
           })}
         </nav>
 
-        {/* Session info */}
+        {/* Author info */}
         <div className="mt-4 rounded-lg border border-border bg-secondary/30 p-3">
-          <p className="text-xs font-medium text-muted-foreground">Duración total</p>
-          <p className="text-lg font-semibold text-foreground">2.5 horas</p>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            Material educativo elaborado por <span className="font-semibold text-foreground">Ing. Henry Tene Torres</span>
+          </p>
         </div>
       </div>
     </aside>

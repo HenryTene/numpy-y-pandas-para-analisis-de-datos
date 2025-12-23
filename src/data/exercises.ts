@@ -17,7 +17,6 @@ export interface Module {
   title: string;
   description: string;
   icon: string;
-  duration: string;
   exercises: Exercise[];
   theory: string[];
 }
@@ -689,11 +688,10 @@ export const sampleDataset = {
 
 export const modules: Module[] = [
   {
-    id: 'diagnostico',
-    title: 'Diagnóstico',
-    description: 'Evalúa tu nivel actual',
-    icon: '🎯',
-    duration: '5-8 min',
+    id: 'uv-intro',
+    title: 'UV - Gestor Python',
+    description: 'Instalación y comandos básicos',
+    icon: '📦',
     exercises: [],
     theory: [],
   },
@@ -702,7 +700,6 @@ export const modules: Module[] = [
     title: 'NumPy Esencial',
     description: 'Arrays y operaciones vectorizadas',
     icon: '⚡',
-    duration: '35-40 min',
     exercises: numpyExercises,
     theory: [
       'NumPy es la base del análisis de datos en Python',
@@ -715,7 +712,6 @@ export const modules: Module[] = [
     title: 'Pandas Esencial',
     description: 'DataFrames y manipulación',
     icon: '🐼',
-    duration: '45-50 min',
     exercises: pandasExercises,
     theory: [
       'Pandas extiende NumPy para datos tabulares',
@@ -728,7 +724,6 @@ export const modules: Module[] = [
     title: 'Limpieza Profesional',
     description: 'Casos reales y checklist',
     icon: '🧹',
-    duration: '35-40 min',
     exercises: [],
     theory: [],
   },
@@ -737,7 +732,6 @@ export const modules: Module[] = [
     title: 'Mini-Proyecto',
     description: 'Integra todo lo aprendido',
     icon: '🏗️',
-    duration: '30-35 min',
     exercises: [],
     theory: [],
   },
@@ -746,7 +740,6 @@ export const modules: Module[] = [
     title: 'Evaluación Final',
     description: 'Quiz y próximos pasos',
     icon: '🎓',
-    duration: '10-12 min',
     exercises: [],
     theory: [],
   },
