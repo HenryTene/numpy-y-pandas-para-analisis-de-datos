@@ -2,8 +2,37 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { sampleDataset } from '@/data/exercises';
-import { Check, Rocket, Target, TrendingUp, AlertCircle, ArrowRight } from 'lucide-react';
+import { Check, Rocket, Target, TrendingUp, AlertCircle, ArrowRight, Copy, CheckCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
+
+function CodeBlock({ code, title }: { code: string; title: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    await navigator.clipboard.writeText(code);
+    setCopied(true);
+    toast.success('Código copiado al portapapeles');
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="mt-4 rounded-lg bg-code-bg overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-2 border-b border-border/50">
+        <span className="text-xs text-muted-foreground">{title}</span>
+        <button
+          onClick={handleCopy}
+          className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+        >
+          {copied ? <CheckCheck className="h-3 w-3 text-success" /> : <Copy className="h-3 w-3" />}
+          {copied ? 'Copiado' : 'Copiar'}
+        </button>
+      </div>
+      <pre className="p-4 text-sm font-mono overflow-x-auto">{code}</pre>
+    </div>
+  );
+}
 
 interface ProjectModuleProps {
   onComplete: () => void;
@@ -207,9 +236,7 @@ print(outliers[['producto', 'precio']])`,
                     <p className="text-muted-foreground">{task.description}</p>
                     
                     {/* Code */}
-                    <pre className="mt-4 p-4 rounded-lg bg-code-bg text-sm font-mono overflow-x-auto">
-                      {task.code}
-                    </pre>
+                    <CodeBlock code={task.code} title="Python" />
                   </div>
                 </div>
               </button>
