@@ -135,9 +135,6 @@ print(outliers[['producto', 'precio']])`,
         </p>
         <div className="flex items-center justify-center gap-2 mt-4">
           <Badge variant="outline">{completedTasks.length}/{tasks.length} tareas</Badge>
-          <Badge variant="outline" className="bg-accent/10 border-accent/30 text-accent">
-            30-35 min
-          </Badge>
         </div>
       </div>
 

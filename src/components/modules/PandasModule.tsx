@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { pandasExercises } from '@/data/exercises';
 import { ExerciseCard } from '@/components/ExerciseCard';
 import { Badge } from '@/components/ui/badge';
-import { Table, Filter, GitMerge, ChevronDown, ChevronUp, BookOpen, Database } from 'lucide-react';
+import { Table, Filter, GitMerge, ChevronDown, ChevronUp, BookOpen, Database, ExternalLink } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface PandasModuleProps {
@@ -566,9 +566,15 @@ export function PandasModule({ completedExercises, onCompleteExercise, onError }
         </p>
         <div className="flex items-center justify-center gap-2 mt-4">
           <Badge variant="outline">{completedCount}/{pandasExercises.length} completados</Badge>
-          <Badge variant="outline" className="bg-primary/10 border-primary/30 text-primary">
-            45-50 min
-          </Badge>
+          <a 
+            href="https://pandas.pydata.org/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
+          >
+            <ExternalLink className="h-3 w-3" />
+            Documentación oficial
+          </a>
         </div>
       </div>
 

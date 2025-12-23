@@ -107,9 +107,6 @@ print(df['cliente_email'].head())`,
         </p>
         <div className="flex items-center justify-center gap-2 mt-4">
           <Badge variant="outline">{completedSteps.length}/{checklistItems.length} pasos</Badge>
-          <Badge variant="outline" className="bg-warning/10 border-warning/30 text-warning">
-            35-40 min
-          </Badge>
         </div>
       </div>
 
