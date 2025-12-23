@@ -17,7 +17,7 @@ const INITIAL_PROGRESS: UserProgress = {
   streak: 0,
   completedExercises: [],
   unlockedBadges: [],
-  currentModule: 'diagnostico',
+  currentModule: 'uv-intro',
   quizScore: 0,
   diagnosticCompleted: false,
 };
