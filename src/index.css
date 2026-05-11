@@ -44,11 +44,12 @@
 
     /* Code syntax colors */
     --code-bg: 222 47% 5%;
-    --code-keyword: 262 83% 68%;
-    --code-string: 142 76% 46%;
-    --code-number: 38 92% 60%;
-    --code-function: 174 72% 56%;
-    --code-comment: 215 20% 45%;
+    --code-keyword: 330 85% 70%;
+    --code-string: 38 95% 65%;
+    --code-number: 25 95% 65%;
+    --code-function: 174 80% 62%;
+    --code-comment: 145 70% 62%;
+    --code-line-number: 215 25% 38%;
 
     /* XP and gamification */
     --xp-gold: 45 93% 58%;

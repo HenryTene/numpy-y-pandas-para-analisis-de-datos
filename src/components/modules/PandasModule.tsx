@@ -2,31 +2,8 @@ import { useState } from 'react';
 import { pandasExercises } from '@/data/exercises';
 import { ExerciseCard } from '@/components/ExerciseCard';
 import { Badge } from '@/components/ui/badge';
-import { Table, Filter, GitMerge, ChevronDown, ChevronUp, BookOpen, Database, ExternalLink, Copy, CheckCheck } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { toast } from 'sonner';
-
-function CopyButton({ code }: { code: string }) {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    await navigator.clipboard.writeText(code);
-    setCopied(true);
-    toast.success('Código copiado al portapapeles');
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  return (
-    <button
-      onClick={handleCopy}
-      className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
-    >
-      {copied ? <CheckCheck className="h-3 w-3 text-success" /> : <Copy className="h-3 w-3" />}
-      {copied ? 'Copiado' : 'Copiar'}
-    </button>
-  );
-}
+import { Table, Filter, GitMerge, ChevronDown, ChevronUp, BookOpen, Database, ExternalLink } from 'lucide-react';
+import { PythonCode, type LineNote } from '@/components/PythonCode';
 
 interface PandasModuleProps {
   completedExercises: string[];
@@ -40,9 +17,10 @@ interface ExampleProps {
   code: string;
   output: string;
   explanation: string;
+  lineNotes?: LineNote[];
 }
 
-function CodeExample({ title, description, code, output, explanation }: ExampleProps) {
+function CodeExample({ title, description, code, output, explanation, lineNotes }: ExampleProps) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
@@ -57,26 +35,20 @@ function CodeExample({ title, description, code, output, explanation }: ExampleP
         </div>
         {isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
       </button>
-      
+
       {isExpanded && (
         <div className="px-4 pb-4 space-y-4 animate-fade-in">
           <p className="text-sm text-muted-foreground">{description}</p>
-          
-          <div className="rounded-lg bg-code-bg overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-2 border-b border-border/50">
-              <span className="text-xs text-muted-foreground">Python</span>
-              <CopyButton code={code} />
-            </div>
-            <pre className="p-4 text-sm font-mono overflow-x-auto">{code}</pre>
-          </div>
-          
+
+          <PythonCode code={code} lineNotes={lineNotes} />
+
           <div className="rounded-lg bg-success/10 border border-success/20 p-4">
             <p className="text-xs font-medium text-success mb-2">📤 Output:</p>
             <pre className="text-sm font-mono text-foreground whitespace-pre-wrap">{output}</pre>
           </div>
-          
+
           <div className="rounded-lg bg-primary/10 border border-primary/20 p-4">
-            <p className="text-xs font-medium text-primary mb-2">💡 Explicación:</p>
+            <p className="text-xs font-medium text-primary mb-2">💡 Resumen:</p>
             <p className="text-sm text-foreground">{explanation}</p>
           </div>
         </div>
@@ -145,6 +117,15 @@ std     8.602325   9939.819405
 min    22.000000  28000.000000
 max    45.000000  55000.000000`,
     explanation: 'pd.DataFrame() crea una tabla desde un diccionario donde las claves son nombres de columnas. .shape muestra dimensiones, .dtypes los tipos de datos, .head(n) las primeras n filas, y .describe() genera estadísticas de columnas numéricas.',
+    lineNotes: [
+      { line: 1, note: 'Importamos pandas con el alias estándar pd.' },
+      { line: 4, note: 'pd.DataFrame(dict) crea la tabla; cada clave del diccionario es una columna.' },
+      { line: 15, note: '.shape devuelve la tupla (nº filas, nº columnas).' },
+      { line: 16, note: '.columns devuelve un Index con los nombres; .tolist() lo pasa a lista.' },
+      { line: 18, note: '.dtypes muestra el tipo de cada columna (object = texto, int64, float64...).' },
+      { line: 22, note: '.head(n) muestra las primeras n filas (5 por defecto).' },
+      { line: 25, note: '.describe() resumen estadístico de columnas numéricas: count, mean, std, min, max, cuartiles.' },
+    ],
   },
   {
     title: 'Ejemplo 2: Selección de datos con loc e iloc',
@@ -222,6 +203,15 @@ C  Teclado    150
 D  Monitor     80
 E   Webcam    120`,
     explanation: 'loc usa etiquetas (nombres de índices y columnas). iloc usa posiciones numéricas (0, 1, 2...). En loc, el rango incluye el final ("A":"C" incluye C). En iloc, el rango excluye el final (0:3 son posiciones 0, 1, 2). Para columnas: df["col"] devuelve una Serie, df[["col1","col2"]] devuelve un DataFrame.',
+    lineNotes: [
+      { line: 7, note: 'index= asigna etiquetas personalizadas (A-E) a las filas en lugar del 0..n por defecto.' },
+      { line: 14, note: 'df.loc["B"] selecciona la fila con etiqueta "B" y la devuelve como Serie.' },
+      { line: 17, note: 'loc admite slicing por etiquetas (incluye "C") y selección de columnas como lista.' },
+      { line: 21, note: 'df.iloc[1] selecciona por POSICIÓN: la segunda fila (índice 1).' },
+      { line: 24, note: 'iloc usa rangos numéricos al estilo Python: 0:3 son posiciones 0, 1, 2 (NO incluye 3).' },
+      { line: 27, note: 'df["precio"] devuelve una Serie (1D); .tolist() la convierte a lista de Python.' },
+      { line: 29, note: 'df[["producto","stock"]] (doble corchete) devuelve un DataFrame con esas columnas.' },
+    ],
   },
   {
     title: 'Ejemplo 3: Filtrado con condiciones',
@@ -307,6 +297,14 @@ Departamentos IT o RRHH:
 2    María           IT    52000         8
 5   Carlos           IT    48000         7`,
     explanation: 'df[condición] filtra filas donde la condición es True. Para múltiples condiciones usa & (AND) y | (OR) CON PARÉNTESIS obligatorios. isin() es útil para filtrar por una lista de valores. query() permite escribir condiciones como strings, más legible para consultas complejas.',
+    lineNotes: [
+      { line: 16, note: 'df[df["salario"] > 40000]: la condición genera una máscara booleana y df[...] devuelve solo las filas True.' },
+      { line: 19, note: 'Comparación de strings con ==; las comillas son obligatorias para textos.' },
+      { line: 23, note: 'AND con & y paréntesis OBLIGATORIOS por la precedencia de operadores en Python.' },
+      { line: 26, note: 'OR con |. Misma regla: cada condición entre paréntesis.' },
+      { line: 30, note: 'isin([...]) filtra valores que pertenecen a una lista; equivale a IN de SQL.' },
+      { line: 33, note: 'query() acepta la condición como string. Útil cuando hay muchas condiciones encadenadas.' },
+    ],
   },
   {
     title: 'Ejemplo 4: GroupBy y agregaciones',
@@ -390,6 +388,14 @@ Home    1400
 Food     350
 Name: ventas, dtype: int64`,
     explanation: 'groupby() agrupa filas con el mismo valor en una columna. Luego aplicas funciones de agregación: sum(), mean(), count(), min(), max(), etc. agg() permite múltiples funciones o diferentes funciones por columna. reset_index() convierte el resultado en un DataFrame normal.',
+    lineNotes: [
+      { line: 15, note: 'groupby("categoria") agrupa por valores únicos; ["ventas"].sum() suma esa columna por grupo.' },
+      { line: 19, note: '.agg(["sum","mean","count"]) aplica varias funciones a la vez sobre la misma columna.' },
+      { line: 22, note: '.agg con un dict permite distintas funciones por columna (sum a ventas, mean a cantidad).' },
+      { line: 28, note: 'reset_index() convierte el índice del groupby en columna normal → DataFrame plano.' },
+      { line: 29, note: 'Asignar una lista a .columns renombra todas las columnas en orden.' },
+      { line: 33, note: 'sort_values con ascending=False ordena de mayor a menor para ver el ranking.' },
+    ],
   },
   {
     title: 'Ejemplo 5: Merge (JOIN de DataFrames)',
@@ -479,6 +485,15 @@ Clientes:
 2          2  Luis López    Mouse
 3          4  María Ruiz  Teclado`,
     explanation: 'pd.merge() une DataFrames por una columna común. INNER (por defecto) solo mantiene coincidencias. LEFT mantiene todas las filas del DataFrame izquierdo. RIGHT todas del derecho. OUTER todas de ambos. Si las columnas tienen nombres diferentes, usa left_on y right_on.',
+    lineNotes: [
+      { line: 4, note: 'DataFrame de pedidos con 5 registros; nota que cliente_id 104 no estará en clientes.' },
+      { line: 12, note: 'DataFrame de clientes; cliente 105 nunca pidió, y 104 no aparece aquí.' },
+      { line: 24, note: 'pd.merge con on="cliente_id" hace INNER JOIN: solo conserva las coincidencias en ambas tablas.' },
+      { line: 28, note: 'how="left": conserva TODAS las filas de pedidos; rellena con NaN cuando el cliente no existe (104).' },
+      { line: 32, note: 'how="right": conserva TODOS los clientes; pone NaN en pedido para los que no compraron (105).' },
+      { line: 36, note: 'rename() cambia el nombre de la columna para simular tablas con nombres distintos.' },
+      { line: 37, note: 'Cuando las columnas se llaman distinto, usamos left_on y right_on en lugar de on.' },
+    ],
   },
   {
     title: 'Ejemplo 6: Manejo de valores nulos',
@@ -573,6 +588,20 @@ DataFrame después de rellenar:
 3  Desconocido  35.0       0.0        Valencia
 4      Carlos  28.3   38000.0         Sevilla`,
     explanation: 'isna() detecta valores nulos. dropna() elimina filas/columnas con nulos (subset= para columnas específicas). fillna() reemplaza nulos con un valor: puede ser un número fijo, la media, mediana, moda, o forward/backward fill. Nunca uses == np.nan para comparar.',
+    lineNotes: [
+      { line: 2, note: 'Importamos numpy para acceder a np.nan, la representación oficial de "Not a Number".' },
+      { line: 5, note: 'None es el nulo para strings/objetos en Python.' },
+      { line: 6, note: 'np.nan es el nulo para floats; al haber NaN, toda la columna pasa a tipo float64.' },
+      { line: 16, note: 'isna() devuelve un DataFrame booleano del mismo tamaño con True en celdas nulas.' },
+      { line: 19, note: '.sum() sobre booleanos cuenta los True por columna → cantidad de nulos.' },
+      { line: 22, note: 'Dividir entre len(df) y ×100 da el porcentaje de nulos por columna; .round(1) deja 1 decimal.' },
+      { line: 26, note: 'dropna() sin argumentos elimina toda fila que tenga AL MENOS un nulo.' },
+      { line: 29, note: 'subset=["edad"] limita el dropna a una columna concreta.' },
+      { line: 32, note: '.copy() crea una copia independiente para no mutar el DataFrame original.' },
+      { line: 33, note: 'Imputación clásica: rellenar nulos numéricos con la media de la columna.' },
+      { line: 34, note: 'Para salario, rellenamos con 0 (decisión de negocio).' },
+      { line: 35, note: 'Para texto usamos un placeholder descriptivo en lugar de un número.' },
+    ],
   },
 ];
 

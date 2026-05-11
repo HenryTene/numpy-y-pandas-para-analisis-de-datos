@@ -2,37 +2,9 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { sampleDataset } from '@/data/exercises';
-import { Check, Rocket, Target, TrendingUp, AlertCircle, ArrowRight, Copy, CheckCheck } from 'lucide-react';
+import { Check, Rocket, Target, TrendingUp, AlertCircle, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { toast } from 'sonner';
-
-function CodeBlock({ code, title }: { code: string; title: string }) {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    await navigator.clipboard.writeText(code);
-    setCopied(true);
-    toast.success('Código copiado al portapapeles');
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  return (
-    <div className="mt-4 rounded-lg bg-code-bg overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-2 border-b border-border/50">
-        <span className="text-xs text-muted-foreground">{title}</span>
-        <button
-          onClick={handleCopy}
-          className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
-        >
-          {copied ? <CheckCheck className="h-3 w-3 text-success" /> : <Copy className="h-3 w-3" />}
-          {copied ? 'Copiado' : 'Copiar'}
-        </button>
-      </div>
-      <pre className="p-4 text-sm font-mono overflow-x-auto">{code}</pre>
-    </div>
-  );
-}
+import { PythonCode, type LineNote } from '@/components/PythonCode';
 
 interface ProjectModuleProps {
   onComplete: () => void;
@@ -41,7 +13,7 @@ interface ProjectModuleProps {
 export function ProjectModule({ onComplete }: ProjectModuleProps) {
   const [completedTasks, setCompletedTasks] = useState<string[]>([]);
 
-  const tasks = [
+  const tasks: Array<{ id: string; title: string; description: string; code: string; lineNotes: LineNote[] }> = [
     {
       id: 'load',
       title: 'Cargar y explorar',
@@ -56,6 +28,14 @@ print(df.shape)           # Dimensiones
 print(df.info())          # Tipos y nulos
 print(df.describe())      # Estadísticas
 print(df.head())          # Primeras filas`,
+      lineNotes: [
+        { line: 1, note: 'Importamos pandas con el alias estándar pd.' },
+        { line: 4, note: 'read_csv carga un archivo CSV en un DataFrame. Detecta separador, encoding y tipos automáticamente.' },
+        { line: 7, note: '.shape devuelve la tupla (nº filas, nº columnas).' },
+        { line: 8, note: '.info() lista columnas, tipos y cuántos no-nulos hay en cada una.' },
+        { line: 9, note: '.describe() muestra estadísticas (count, mean, std, min, max, cuartiles) de las columnas numéricas.' },
+        { line: 10, note: '.head() muestra las primeras 5 filas para inspeccionar visualmente.' },
+      ],
     },
     {
       id: 'clean',
@@ -74,6 +54,14 @@ df['cliente_email'] = df['cliente_email'].str.strip().str.lower()
 
 # Parsear fechas
 df['fecha'] = pd.to_datetime(df['fecha'], dayfirst=True, errors='coerce')`,
+      lineNotes: [
+        { line: 2, note: 'drop_duplicates() elimina filas idénticas y devuelve un nuevo DataFrame.' },
+        { line: 5, note: 'Convertimos precio a número; los strings inválidos se vuelven NaN gracias a errors="coerce".' },
+        { line: 6, note: 'Imputamos los precios faltantes con la media de la columna.' },
+        { line: 7, note: 'Para texto, rellenamos los nulos de ciudad con "Desconocido".' },
+        { line: 10, note: 'Encadenamos .str.strip() y .str.lower() para limpiar espacios y normalizar a minúsculas en una sola línea.' },
+        { line: 13, note: 'Convertimos las fechas a datetime con dayfirst=True (formato 15/01/2024) y coerce para errores.' },
+      ],
     },
     {
       id: 'transform',
@@ -88,6 +76,12 @@ df['ingresos'] = df['precio'] * df['cantidad']
 
 # Extraer dominio del email
 df['dominio_email'] = df['cliente_email'].str.split('@').str[1]`,
+      lineNotes: [
+        { line: 2, note: '.dt.month extrae el número de mes (1-12) de cada fecha.' },
+        { line: 3, note: '.dt.day_name() devuelve el nombre del día ("Monday", "Tuesday"...).' },
+        { line: 6, note: 'Operación vectorizada: precio * cantidad se multiplica fila a fila para crear "ingresos".' },
+        { line: 9, note: 'split("@") parte el email en lista [usuario, dominio]; .str[1] toma el segundo elemento (el dominio).' },
+      ],
     },
     {
       id: 'insight1',
@@ -103,6 +97,10 @@ print(ventas_categoria)
 productos_categoria = df.groupby('categoria')['cantidad'].sum()
 print("\\nProductos vendidos por categoría:")
 print(productos_categoria)`,
+      lineNotes: [
+        { line: 2, note: 'Agrupamos por categoría, sumamos los ingresos y ordenamos descendente para ver el top.' },
+        { line: 8, note: 'Mismo patrón pero sumando "cantidad" para ver volumen de unidades vendidas.' },
+      ],
     },
     {
       id: 'insight2',
@@ -118,6 +116,10 @@ print(ventas_mes)
 ventas_dia = df.groupby('dia_semana')['ingresos'].sum().sort_values(ascending=False)
 print("\\nVentas por día de la semana:")
 print(ventas_dia)`,
+      lineNotes: [
+        { line: 2, note: 'groupby("mes") agrega ingresos por número de mes; útil para detectar estacionalidad.' },
+        { line: 8, note: 'Agrupar por día de la semana ordenado descendente revela el día de mayor venta.' },
+      ],
     },
     {
       id: 'insight3',
@@ -137,6 +139,15 @@ outliers = df[(df['precio'] < limite_inferior) | (df['precio'] > limite_superior
 print(f"Rango normal: {limite_inferior:.2f} - {limite_superior:.2f}")
 print(f"Outliers encontrados: {len(outliers)}")
 print(outliers[['producto', 'precio']])`,
+      lineNotes: [
+        { line: 2, note: 'Q1 (cuartil 25%): el 25% de los precios son menores que este valor.' },
+        { line: 3, note: 'Q3 (cuartil 75%): el 75% de los precios son menores que este valor.' },
+        { line: 4, note: 'IQR (rango intercuartílico) = Q3 - Q1. Mide la dispersión del 50% central.' },
+        { line: 6, note: 'Regla de Tukey: por debajo de Q1 - 1.5·IQR se considera outlier.' },
+        { line: 7, note: 'Por encima de Q3 + 1.5·IQR también se considera outlier.' },
+        { line: 10, note: 'Filtramos las filas cuyo precio está fuera del rango normal usando OR (|).' },
+        { line: 12, note: 'f-string con :.2f formatea los números a 2 decimales.' },
+      ],
     },
   ];
 
@@ -236,7 +247,9 @@ print(outliers[['producto', 'precio']])`,
                     <p className="text-muted-foreground">{task.description}</p>
                     
                     {/* Code */}
-                    <CodeBlock code={task.code} title="Python" />
+                    <div className="mt-4">
+                      <PythonCode code={task.code} lineNotes={task.lineNotes} />
+                    </div>
                   </div>
                 </div>
               </button>

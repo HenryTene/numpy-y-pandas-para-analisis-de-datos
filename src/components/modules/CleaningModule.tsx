@@ -2,37 +2,9 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { sampleDataset } from '@/data/exercises';
-import { Check, AlertTriangle, Trash2, Calendar, Type, Copy, ArrowRight, CheckCheck } from 'lucide-react';
+import { Check, AlertTriangle, Trash2, Calendar, Type, Copy, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { toast } from 'sonner';
-
-function CodeBlock({ code, title }: { code: string; title: string }) {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    await navigator.clipboard.writeText(code);
-    setCopied(true);
-    toast.success('Código copiado al portapapeles');
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  return (
-    <div className="mt-4 rounded-lg bg-code-bg overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-2 border-b border-border/50">
-        <span className="text-xs text-muted-foreground">{title}</span>
-        <button
-          onClick={handleCopy}
-          className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
-        >
-          {copied ? <CheckCheck className="h-3 w-3 text-success" /> : <Copy className="h-3 w-3" />}
-          {copied ? 'Copiado' : 'Copiar'}
-        </button>
-      </div>
-      <pre className="p-4 text-sm font-mono overflow-x-auto">{code}</pre>
-    </div>
-  );
-}
+import { PythonCode, type LineNote } from '@/components/PythonCode';
 
 interface CleaningModuleProps {
   onComplete: () => void;
@@ -41,7 +13,15 @@ interface CleaningModuleProps {
 export function CleaningModule({ onComplete }: CleaningModuleProps) {
   const [completedSteps, setCompletedSteps] = useState<string[]>([]);
 
-  const checklistItems = [
+  const checklistItems: Array<{
+    id: string;
+    title: string;
+    description: string;
+    icon: typeof Copy;
+    code: string;
+    problem: string;
+    lineNotes: LineNote[];
+  }> = [
     {
       id: 'duplicates',
       title: 'Eliminar duplicados',
@@ -53,6 +33,10 @@ print(df.duplicated().sum())
 # Eliminar duplicados
 df = df.drop_duplicates()`,
       problem: 'El dataset tiene 1 fila duplicada (order_id 1002)',
+      lineNotes: [
+        { line: 2, note: 'df.duplicated() devuelve una Serie booleana con True en filas duplicadas; .sum() las cuenta.' },
+        { line: 5, note: 'drop_duplicates() devuelve un nuevo DataFrame sin filas repetidas. Lo reasignamos a df.' },
+      ],
     },
     {
       id: 'nulls',
@@ -68,6 +52,11 @@ df['ciudad'].fillna('Desconocido', inplace=True)
 # Rellenar con media/mediana
 df['precio'].fillna(df['precio'].mean(), inplace=True)`,
       problem: 'Hay nulos en precio (2) y ciudad (2)',
+      lineNotes: [
+        { line: 2, note: 'isna() marca con True cada celda nula; .sum() suma los True por columna.' },
+        { line: 5, note: "fillna('Desconocido') reemplaza los NaN de 'ciudad' por un texto fijo. inplace=True modifica el DataFrame original." },
+        { line: 8, note: 'Para variables numéricas, imputar con la media conserva el promedio del conjunto.' },
+      ],
     },
     {
       id: 'types',
@@ -83,6 +72,11 @@ df['precio'] = pd.to_numeric(df['precio'], errors='coerce')
 # Verificar cambio
 print(df.dtypes)`,
       problem: 'La columna precio está como string',
+      lineNotes: [
+        { line: 2, note: 'dtypes muestra el tipo de cada columna (object = texto, int64, float64, etc.).' },
+        { line: 5, note: "pd.to_numeric convierte a número. errors='coerce' convierte los valores no convertibles en NaN en lugar de fallar." },
+        { line: 8, note: 'Verificamos que la columna ahora aparezca como float64.' },
+      ],
     },
     {
       id: 'dates',
@@ -96,6 +90,11 @@ df['fecha'] = pd.to_datetime(df['fecha'], dayfirst=True, errors='coerce')
 df['mes'] = df['fecha'].dt.month
 df['dia_semana'] = df['fecha'].dt.dayofweek`,
       problem: 'Las fechas tienen formatos mixtos (2024-01-15, 15/01/2024, etc.)',
+      lineNotes: [
+        { line: 2, note: 'to_datetime parsea strings a fechas. dayfirst=True interpreta 15/01/2024 como 15-ene; errors="coerce" deja NaT donde no puede parsear.' },
+        { line: 5, note: 'El accesor .dt expone propiedades de fecha. .month devuelve el número de mes (1-12).' },
+        { line: 6, note: '.dayofweek devuelve 0=Lunes ... 6=Domingo. Útil para análisis por día semana.' },
+      ],
     },
     {
       id: 'text',
@@ -109,6 +108,11 @@ df['cliente_email'] = df['cliente_email'].str.lower()  # Minúsculas
 # Verificar
 print(df['cliente_email'].head())`,
       problem: 'Emails con espacios y mayúsculas inconsistentes',
+      lineNotes: [
+        { line: 2, note: 'El accesor .str aplica métodos de string a toda la columna. strip() elimina espacios al inicio y al final.' },
+        { line: 3, note: 'lower() convierte todo a minúsculas para evitar duplicados como "ANA@x.com" vs "ana@x.com".' },
+        { line: 6, note: 'head() muestra las primeras 5 filas para verificar visualmente el resultado.' },
+      ],
     },
   ];
 
@@ -236,7 +240,9 @@ print(df['cliente_email'].head())`,
                     </div>
                     
                     {/* Code example */}
-                    <CodeBlock code={item.code} title="Python" />
+                    <div className="mt-4">
+                      <PythonCode code={item.code} lineNotes={item.lineNotes} />
+                    </div>
                   </div>
                 </div>
               </button>
