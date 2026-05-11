@@ -274,6 +274,18 @@ Entre 30 y 70: [45 67 34 56]
 Índices donde > 50: [2 4 6 7]
 Clasificación: ['bajo' 'bajo' 'alto' 'bajo' 'alto' 'bajo' 'alto' 'alto']`,
     explanation: 'Una condición sobre un array crea una máscara booleana (True/False). Al usar la máscara como índice, NumPy devuelve solo los valores donde es True. Para múltiples condiciones usa & (and) y | (or) con paréntesis. np.where() es muy útil para encontrar posiciones o hacer reemplazos condicionales.',
+    lineNotes: [
+      { line: 4, note: 'Creamos un array de prueba con 8 valores numéricos.' },
+      { line: 7, note: 'datos > 50 compara cada elemento con 50 y devuelve un array booleano del mismo tamaño.' },
+      { line: 11, note: 'Al indexar el array con la máscara, NumPy conserva solo las posiciones donde la máscara es True.' },
+      { line: 16, note: 'Forma compacta: pasamos la condición directamente como índice, sin guardar la máscara.' },
+      { line: 18, note: 'Combinación AND con & y paréntesis obligatorios alrededor de cada condición.' },
+      { line: 22, note: 'np.sum sobre booleanos cuenta los True (True=1, False=0).' },
+      { line: 23, note: 'np.any: devuelve True si AL MENOS UN elemento cumple la condición.' },
+      { line: 24, note: 'np.all: devuelve True solo si TODOS los elementos cumplen la condición.' },
+      { line: 27, note: 'np.where con un argumento devuelve los índices (posiciones) donde la condición es True.' },
+      { line: 30, note: 'np.where(cond, x, y) actúa como if-else vectorizado: x donde cond es True, y donde es False.' },
+    ],
   },
 ];
 
