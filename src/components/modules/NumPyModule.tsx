@@ -86,6 +86,14 @@ Con linspace: [0.   0.25 0.5  0.75 1.  ]
 Zeros: [0. 0. 0. 0. 0.]
 Ones: [1. 1. 1.]`,
     explanation: 'np.array() convierte listas a arrays. np.arange() es como range() pero para arrays. np.linspace() crea valores espaciados uniformemente entre dos puntos. np.zeros() y np.ones() crean arrays con valores predeterminados.',
+    lineNotes: [
+      { line: 1, note: 'Importamos NumPy con el alias estándar np.' },
+      { line: 4, note: 'np.array() crea un array a partir de una lista de Python.' },
+      { line: 8, note: 'np.arange(inicio, fin, paso) genera valores enteros sin incluir el final, igual que range().' },
+      { line: 12, note: 'np.linspace(inicio, fin, n) crea n valores espaciados uniformemente; SÍ incluye el final.' },
+      { line: 16, note: 'np.zeros(n) crea un array de n ceros (tipo float por defecto).' },
+      { line: 17, note: 'np.ones(n) crea un array de n unos (también float).' },
+    ],
   },
   {
     title: 'Ejemplo 2: Shape y Reshape',
