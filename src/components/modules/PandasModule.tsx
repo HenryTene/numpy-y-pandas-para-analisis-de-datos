@@ -545,6 +545,20 @@ DataFrame después de rellenar:
 3  Desconocido  35.0       0.0        Valencia
 4      Carlos  28.3   38000.0         Sevilla`,
     explanation: 'isna() detecta valores nulos. dropna() elimina filas/columnas con nulos (subset= para columnas específicas). fillna() reemplaza nulos con un valor: puede ser un número fijo, la media, mediana, moda, o forward/backward fill. Nunca uses == np.nan para comparar.',
+    lineNotes: [
+      { line: 2, note: 'Importamos numpy para acceder a np.nan, la representación oficial de "Not a Number".' },
+      { line: 5, note: 'None es el nulo para strings/objetos en Python.' },
+      { line: 6, note: 'np.nan es el nulo para floats; al haber NaN, toda la columna pasa a tipo float64.' },
+      { line: 16, note: 'isna() devuelve un DataFrame booleano del mismo tamaño con True en celdas nulas.' },
+      { line: 19, note: '.sum() sobre booleanos cuenta los True por columna → cantidad de nulos.' },
+      { line: 22, note: 'Dividir entre len(df) y ×100 da el porcentaje de nulos por columna; .round(1) deja 1 decimal.' },
+      { line: 26, note: 'dropna() sin argumentos elimina toda fila que tenga AL MENOS un nulo.' },
+      { line: 29, note: 'subset=["edad"] limita el dropna a una columna concreta.' },
+      { line: 32, note: '.copy() crea una copia independiente para no mutar el DataFrame original.' },
+      { line: 33, note: 'Imputación clásica: rellenar nulos numéricos con la media de la columna.' },
+      { line: 34, note: 'Para salario, rellenamos con 0 (decisión de negocio).' },
+      { line: 35, note: 'Para texto usamos un placeholder descriptivo en lugar de un número.' },
+    ],
   },
 ];
 
