@@ -362,6 +362,14 @@ Home    1400
 Food     350
 Name: ventas, dtype: int64`,
     explanation: 'groupby() agrupa filas con el mismo valor en una columna. Luego aplicas funciones de agregación: sum(), mean(), count(), min(), max(), etc. agg() permite múltiples funciones o diferentes funciones por columna. reset_index() convierte el resultado en un DataFrame normal.',
+    lineNotes: [
+      { line: 15, note: 'groupby("categoria") agrupa por valores únicos; ["ventas"].sum() suma esa columna por grupo.' },
+      { line: 19, note: '.agg(["sum","mean","count"]) aplica varias funciones a la vez sobre la misma columna.' },
+      { line: 22, note: '.agg con un dict permite distintas funciones por columna (sum a ventas, mean a cantidad).' },
+      { line: 28, note: 'reset_index() convierte el índice del groupby en columna normal → DataFrame plano.' },
+      { line: 29, note: 'Asignar una lista a .columns renombra todas las columnas en orden.' },
+      { line: 33, note: 'sort_values con ascending=False ordena de mayor a menor para ver el ranking.' },
+    ],
   },
   {
     title: 'Ejemplo 5: Merge (JOIN de DataFrames)',
