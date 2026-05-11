@@ -194,6 +194,15 @@ C  Teclado    150
 D  Monitor     80
 E   Webcam    120`,
     explanation: 'loc usa etiquetas (nombres de índices y columnas). iloc usa posiciones numéricas (0, 1, 2...). En loc, el rango incluye el final ("A":"C" incluye C). En iloc, el rango excluye el final (0:3 son posiciones 0, 1, 2). Para columnas: df["col"] devuelve una Serie, df[["col1","col2"]] devuelve un DataFrame.',
+    lineNotes: [
+      { line: 7, note: 'index= asigna etiquetas personalizadas (A-E) a las filas en lugar del 0..n por defecto.' },
+      { line: 14, note: 'df.loc["B"] selecciona la fila con etiqueta "B" y la devuelve como Serie.' },
+      { line: 17, note: 'loc admite slicing por etiquetas (incluye "C") y selección de columnas como lista.' },
+      { line: 21, note: 'df.iloc[1] selecciona por POSICIÓN: la segunda fila (índice 1).' },
+      { line: 24, note: 'iloc usa rangos numéricos al estilo Python: 0:3 son posiciones 0, 1, 2 (NO incluye 3).' },
+      { line: 27, note: 'df["precio"] devuelve una Serie (1D); .tolist() la convierte a lista de Python.' },
+      { line: 29, note: 'df[["producto","stock"]] (doble corchete) devuelve un DataFrame con esas columnas.' },
+    ],
   },
   {
     title: 'Ejemplo 3: Filtrado con condiciones',
