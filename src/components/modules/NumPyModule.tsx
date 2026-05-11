@@ -121,6 +121,13 @@ Shape: (2, 3)
 Array 3D shape: (2, 1, 3)
 Aplanado: [1 2 3 4 5 6]`,
     explanation: 'El shape indica las dimensiones del array. (6,) es 1D con 6 elementos. (2, 3) es 2D con 2 filas y 3 columnas. reshape() cambia la forma sin modificar los datos. flatten() vuelve a convertir en 1D.',
+    lineNotes: [
+      { line: 4, note: 'Array unidimensional con 6 elementos.' },
+      { line: 6, note: '.shape devuelve una tupla con las dimensiones. Aquí: (6,) significa 1D con 6 elementos.' },
+      { line: 9, note: 'reshape(2, 3) reorganiza los datos como 2 filas × 3 columnas. El total de elementos debe coincidir.' },
+      { line: 15, note: 'reshape(2, 1, 3) crea un array 3D: 2 bloques de 1 fila por 3 columnas.' },
+      { line: 19, note: 'flatten() devuelve una copia 1D del array, sin importar su forma original.' },
+    ],
   },
   {
     title: 'Ejemplo 3: Indexing y Slicing',
