@@ -2,31 +2,8 @@ import { useState } from 'react';
 import { numpyExercises } from '@/data/exercises';
 import { ExerciseCard } from '@/components/ExerciseCard';
 import { Badge } from '@/components/ui/badge';
-import { Zap, Box, Layers, ChevronDown, ChevronUp, BookOpen, ExternalLink, Copy, CheckCheck } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { toast } from 'sonner';
-
-function CopyButton({ code }: { code: string }) {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    await navigator.clipboard.writeText(code);
-    setCopied(true);
-    toast.success('Código copiado al portapapeles');
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  return (
-    <button
-      onClick={handleCopy}
-      className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
-    >
-      {copied ? <CheckCheck className="h-3 w-3 text-success" /> : <Copy className="h-3 w-3" />}
-      {copied ? 'Copiado' : 'Copiar'}
-    </button>
-  );
-}
+import { Zap, Box, Layers, ChevronDown, ChevronUp, BookOpen, ExternalLink } from 'lucide-react';
+import { PythonCode, type LineNote } from '@/components/PythonCode';
 
 interface NumPyModuleProps {
   completedExercises: string[];
@@ -40,9 +17,10 @@ interface ExampleProps {
   code: string;
   output: string;
   explanation: string;
+  lineNotes?: LineNote[];
 }
 
-function CodeExample({ title, description, code, output, explanation }: ExampleProps) {
+function CodeExample({ title, description, code, output, explanation, lineNotes }: ExampleProps) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
@@ -57,26 +35,20 @@ function CodeExample({ title, description, code, output, explanation }: ExampleP
         </div>
         {isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
       </button>
-      
+
       {isExpanded && (
         <div className="px-4 pb-4 space-y-4 animate-fade-in">
           <p className="text-sm text-muted-foreground">{description}</p>
-          
-          <div className="rounded-lg bg-code-bg overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-2 border-b border-border/50">
-              <span className="text-xs text-muted-foreground">Python</span>
-              <CopyButton code={code} />
-            </div>
-            <pre className="p-4 text-sm font-mono overflow-x-auto">{code}</pre>
-          </div>
-          
+
+          <PythonCode code={code} lineNotes={lineNotes} />
+
           <div className="rounded-lg bg-success/10 border border-success/20 p-4">
             <p className="text-xs font-medium text-success mb-2">📤 Output:</p>
-            <pre className="text-sm font-mono text-foreground">{output}</pre>
+            <pre className="text-sm font-mono text-foreground whitespace-pre-wrap">{output}</pre>
           </div>
-          
+
           <div className="rounded-lg bg-primary/10 border border-primary/20 p-4">
-            <p className="text-xs font-medium text-primary mb-2">💡 Explicación:</p>
+            <p className="text-xs font-medium text-primary mb-2">💡 Resumen:</p>
             <p className="text-sm text-foreground">{explanation}</p>
           </div>
         </div>
