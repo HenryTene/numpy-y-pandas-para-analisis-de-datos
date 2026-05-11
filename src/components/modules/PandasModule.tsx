@@ -117,6 +117,15 @@ std     8.602325   9939.819405
 min    22.000000  28000.000000
 max    45.000000  55000.000000`,
     explanation: 'pd.DataFrame() crea una tabla desde un diccionario donde las claves son nombres de columnas. .shape muestra dimensiones, .dtypes los tipos de datos, .head(n) las primeras n filas, y .describe() genera estadísticas de columnas numéricas.',
+    lineNotes: [
+      { line: 1, note: 'Importamos pandas con el alias estándar pd.' },
+      { line: 4, note: 'pd.DataFrame(dict) crea la tabla; cada clave del diccionario es una columna.' },
+      { line: 15, note: '.shape devuelve la tupla (nº filas, nº columnas).' },
+      { line: 16, note: '.columns devuelve un Index con los nombres; .tolist() lo pasa a lista.' },
+      { line: 18, note: '.dtypes muestra el tipo de cada columna (object = texto, int64, float64...).' },
+      { line: 22, note: '.head(n) muestra las primeras n filas (5 por defecto).' },
+      { line: 25, note: '.describe() resumen estadístico de columnas numéricas: count, mean, std, min, max, cuartiles.' },
+    ],
   },
   {
     title: 'Ejemplo 2: Selección de datos con loc e iloc',
