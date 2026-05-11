@@ -171,6 +171,20 @@ Elemento [1,2]: 6
 Primera fila: [1 2 3]
 Primera columna: [1 4 7]`,
     explanation: 'Los índices empiezan en 0. Los negativos cuentan desde el final. El slicing [inicio:fin] NO incluye el índice final. [::paso] define cada cuántos elementos tomar. En 2D, [fila, columna] accede a elementos específicos y [:, columna] selecciona toda una columna.',
+    lineNotes: [
+      { line: 3, note: 'Array de 8 elementos numerados 10..80 para visualizar fácilmente las posiciones.' },
+      { line: 6, note: 'arr[0]: el primer elemento (los índices empiezan en 0).' },
+      { line: 7, note: 'arr[-1]: índice negativo = contar desde el final. -1 es el último.' },
+      { line: 11, note: 'arr[2:6]: del índice 2 al 5 (el 6 NO se incluye).' },
+      { line: 12, note: 'arr[:3]: desde el inicio hasta el índice 3 (exclusivo).' },
+      { line: 13, note: 'arr[-3:]: los últimos 3 elementos.' },
+      { line: 14, note: 'arr[::2]: paso 2, toma uno sí y uno no.' },
+      { line: 15, note: 'arr[::-1]: paso negativo invierte el array.' },
+      { line: 18, note: 'Matriz 2D de 3x3 definida con listas anidadas.' },
+      { line: 22, note: 'matriz[1, 2]: fila 1, columna 2 → 6.' },
+      { line: 23, note: 'matriz[0]: fila completa (devuelve un array 1D).' },
+      { line: 24, note: 'matriz[:, 0]: TODAS las filas, columna 0 → primera columna entera.' },
+    ],
   },
   {
     title: 'Ejemplo 4: Operaciones Vectorizadas',
