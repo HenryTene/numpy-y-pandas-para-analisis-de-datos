@@ -247,7 +247,9 @@ print(outliers[['producto', 'precio']])`,
                     <p className="text-muted-foreground">{task.description}</p>
                     
                     {/* Code */}
-                    <CodeBlock code={task.code} title="Python" />
+                    <div className="mt-4">
+                      <PythonCode code={task.code} lineNotes={task.lineNotes} />
+                    </div>
                   </div>
                 </div>
               </button>
