@@ -221,6 +221,16 @@ Raíz cuadrada: [1.   1.41 1.73 2.   2.24]
 Exponencial: [  2.72   7.39  20.09  54.60 148.41]
 Logaritmo: [0.   0.69 1.10 1.39 1.61]`,
     explanation: 'Las operaciones se aplican a TODOS los elementos automáticamente. Esto es mucho más rápido que usar loops de Python. NumPy usa código C optimizado internamente. Las operaciones entre arrays de igual tamaño se aplican elemento a elemento.',
+    lineNotes: [
+      { line: 3, note: 'Array base de 5 elementos para demostrar las operaciones.' },
+      { line: 8, note: 'arr + 10: NumPy suma 10 a CADA elemento (broadcasting de un escalar).' },
+      { line: 9, note: 'arr * 2: multiplicación elemento a elemento, mucho más rápido que un for.' },
+      { line: 10, note: '** es el operador de potencia en Python; aquí eleva cada elemento al cuadrado.' },
+      { line: 14, note: 'Operaciones entre arrays del mismo tamaño se aplican elemento por elemento (no es producto matricial).' },
+      { line: 21, note: 'np.sqrt aplica la raíz cuadrada a todos los elementos.' },
+      { line: 22, note: 'np.exp calcula e^x para cada valor.' },
+      { line: 23, note: 'np.log es el logaritmo natural (base e); para base 10 usa np.log10.' },
+    ],
   },
   {
     title: 'Ejemplo 5: Máscaras Booleanas',
