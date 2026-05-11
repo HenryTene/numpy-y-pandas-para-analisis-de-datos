@@ -279,6 +279,14 @@ Departamentos IT o RRHH:
 2    María           IT    52000         8
 5   Carlos           IT    48000         7`,
     explanation: 'df[condición] filtra filas donde la condición es True. Para múltiples condiciones usa & (AND) y | (OR) CON PARÉNTESIS obligatorios. isin() es útil para filtrar por una lista de valores. query() permite escribir condiciones como strings, más legible para consultas complejas.',
+    lineNotes: [
+      { line: 16, note: 'df[df["salario"] > 40000]: la condición genera una máscara booleana y df[...] devuelve solo las filas True.' },
+      { line: 19, note: 'Comparación de strings con ==; las comillas son obligatorias para textos.' },
+      { line: 23, note: 'AND con & y paréntesis OBLIGATORIOS por la precedencia de operadores en Python.' },
+      { line: 26, note: 'OR con |. Misma regla: cada condición entre paréntesis.' },
+      { line: 30, note: 'isin([...]) filtra valores que pertenecen a una lista; equivale a IN de SQL.' },
+      { line: 33, note: 'query() acepta la condición como string. Útil cuando hay muchas condiciones encadenadas.' },
+    ],
   },
   {
     title: 'Ejemplo 4: GroupBy y agregaciones',
