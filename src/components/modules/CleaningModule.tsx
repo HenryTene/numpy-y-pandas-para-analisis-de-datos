@@ -240,7 +240,9 @@ print(df['cliente_email'].head())`,
                     </div>
                     
                     {/* Code example */}
-                    <CodeBlock code={item.code} title="Python" />
+                    <div className="mt-4">
+                      <PythonCode code={item.code} lineNotes={item.lineNotes} />
+                    </div>
                   </div>
                 </div>
               </button>
