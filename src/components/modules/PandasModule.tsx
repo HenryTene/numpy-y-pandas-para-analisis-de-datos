@@ -451,6 +451,15 @@ Clientes:
 2          2  Luis López    Mouse
 3          4  María Ruiz  Teclado`,
     explanation: 'pd.merge() une DataFrames por una columna común. INNER (por defecto) solo mantiene coincidencias. LEFT mantiene todas las filas del DataFrame izquierdo. RIGHT todas del derecho. OUTER todas de ambos. Si las columnas tienen nombres diferentes, usa left_on y right_on.',
+    lineNotes: [
+      { line: 4, note: 'DataFrame de pedidos con 5 registros; nota que cliente_id 104 no estará en clientes.' },
+      { line: 12, note: 'DataFrame de clientes; cliente 105 nunca pidió, y 104 no aparece aquí.' },
+      { line: 24, note: 'pd.merge con on="cliente_id" hace INNER JOIN: solo conserva las coincidencias en ambas tablas.' },
+      { line: 28, note: 'how="left": conserva TODAS las filas de pedidos; rellena con NaN cuando el cliente no existe (104).' },
+      { line: 32, note: 'how="right": conserva TODOS los clientes; pone NaN en pedido para los que no compraron (105).' },
+      { line: 36, note: 'rename() cambia el nombre de la columna para simular tablas con nombres distintos.' },
+      { line: 37, note: 'Cuando las columnas se llaman distinto, usamos left_on y right_on en lugar de on.' },
+    ],
   },
   {
     title: 'Ejemplo 6: Manejo de valores nulos',
