@@ -117,13 +117,7 @@ export function PythonCode({
             const note = notesByLine.get(lineNum);
 
             return (
-              <div
-                key={idx}
-                className={cn(
-                  'flex items-start group',
-                  note && 'bg-primary/5 -mx-4 px-4 border-l-2 border-primary/40'
-                )}
-              >
+              <div key={idx} className="flex items-start group">
                 <span
                   className="select-none pr-4 text-right text-code-line-number text-xs pt-[2px]"
                   style={{ minWidth: '2.5em' }}
@@ -137,13 +131,13 @@ export function PythonCode({
                       {commentPart}
                     </span>
                   )}
-                  {!codePart && !commentPart && '\u200B'}
+                  {note && (
+                    <span className="italic font-medium text-code-comment">
+                      {(codePart || commentPart) ? '  ' : ''}# {note}
+                    </span>
+                  )}
+                  {!codePart && !commentPart && !note && '\u200B'}
                 </span>
-                {note && (
-                  <span className="hidden md:inline-block pl-4 ml-4 border-l border-primary/30 text-xs italic text-code-comment whitespace-normal max-w-[45%] shrink-0 pt-[2px]">
-                    ← {note}
-                  </span>
-                )}
               </div>
             );
           })}
