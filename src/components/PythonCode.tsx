@@ -76,10 +76,8 @@ export function PythonCode({
   code,
   title = 'Python',
   lineNotes,
-  explanationDefaultOpen = false,
 }: PythonCodeProps) {
   const [copied, setCopied] = useState(false);
-  const [showNotes, setShowNotes] = useState(explanationDefaultOpen);
 
   const handleCopy = async (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -116,14 +114,14 @@ export function PythonCode({
             const cIdx = commentStart(line);
             const codePart = cIdx >= 0 ? line.slice(0, cIdx) : line;
             const commentPart = cIdx >= 0 ? line.slice(cIdx) : '';
-            const hasNote = notesByLine.has(lineNum);
+            const note = notesByLine.get(lineNum);
 
             return (
               <div
                 key={idx}
                 className={cn(
                   'flex items-start group',
-                  hasNote && 'bg-primary/5 -mx-4 px-4 border-l-2 border-primary/40'
+                  note && 'bg-primary/5 -mx-4 px-4 border-l-2 border-primary/40'
                 )}
               >
                 <span
@@ -141,38 +139,28 @@ export function PythonCode({
                   )}
                   {!codePart && !commentPart && '\u200B'}
                 </span>
+                {note && (
+                  <span className="hidden md:inline-block pl-4 ml-4 border-l border-primary/30 text-xs italic text-code-comment whitespace-normal max-w-[45%] shrink-0 pt-[2px]">
+                    ← {note}
+                  </span>
+                )}
               </div>
             );
           })}
         </pre>
       </div>
 
-      {/* Line-by-line explanation */}
+      {/* Mobile notes (stacked) */}
       {lineNotes && lineNotes.length > 0 && (
-        <div className="border-t border-border/50">
-          <button
-            onClick={() => setShowNotes(s => !s)}
-            className="w-full flex items-center justify-between px-4 py-2 text-xs font-medium text-primary hover:bg-primary/5 transition-colors"
-            type="button"
-          >
-            <span className="flex items-center gap-2">
-              <Lightbulb className="h-3.5 w-3.5" />
-              Explicación línea a línea ({lineNotes.length})
-            </span>
-            {showNotes ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-          </button>
-          {showNotes && (
-            <div className="px-4 py-3 bg-primary/5 border-t border-border/30 space-y-2 animate-fade-in">
-              {lineNotes.map((n, i) => (
-                <div key={i} className="flex gap-3 text-sm">
-                  <span className="font-mono text-xs text-primary bg-primary/10 px-2 py-0.5 rounded h-fit shrink-0 mt-0.5">
-                    L{n.line}
-                  </span>
-                  <span className="text-foreground/90">{n.note}</span>
-                </div>
-              ))}
+        <div className="md:hidden border-t border-border/50 px-4 py-3 bg-primary/5 space-y-2">
+          {lineNotes.map((n, i) => (
+            <div key={i} className="flex gap-2 text-xs">
+              <span className="font-mono text-primary bg-primary/10 px-1.5 py-0.5 rounded h-fit shrink-0">
+                L{n.line}
+              </span>
+              <span className="text-foreground/90">{n.note}</span>
             </div>
-          )}
+          ))}
         </div>
       )}
     </div>
