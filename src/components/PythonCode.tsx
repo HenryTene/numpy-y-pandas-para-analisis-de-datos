@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Copy, CheckCheck, ChevronDown, ChevronUp, Lightbulb } from 'lucide-react';
+import { Copy, CheckCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 
