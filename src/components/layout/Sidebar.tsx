@@ -113,15 +113,10 @@ export function Sidebar({ currentModule, completedExercises, onModuleSelect, onR
 
         {/* Reset progress */}
         {onResetProgress && (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={onResetProgress}
-            className="mt-4 w-full text-muted-foreground hover:text-destructive hover:border-destructive"
-          >
-            <RotateCcw className="h-4 w-4" />
-            Reiniciar avances
-          </Button>
+          <ResetProgressDialog
+            onConfirm={onResetProgress}
+            triggerClassName="mt-4 w-full text-muted-foreground hover:text-destructive hover:border-destructive"
+          />
         )}
 
         {/* Author info */}
