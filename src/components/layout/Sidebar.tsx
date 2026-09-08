@@ -1,14 +1,16 @@
 import { cn } from '@/lib/utils';
 import { modules } from '@/data/exercises';
-import { Check, Lock, Play } from 'lucide-react';
+import { Check, Lock, Play, RotateCcw } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface SidebarProps {
   currentModule: string;
   completedExercises: string[];
   onModuleSelect: (moduleId: string) => void;
+  onResetProgress?: () => void;
 }
 
-export function Sidebar({ currentModule, completedExercises, onModuleSelect }: SidebarProps) {
+export function Sidebar({ currentModule, completedExercises, onModuleSelect, onResetProgress }: SidebarProps) {
   const getModuleStatus = (moduleId: string, index: number) => {
     // UV intro is always available
     if (moduleId === 'uv-intro') return 'available';
