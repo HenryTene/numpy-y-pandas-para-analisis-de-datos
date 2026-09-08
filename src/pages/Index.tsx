@@ -51,10 +51,8 @@ const Index = () => {
   };
 
   const handleResetProgress = () => {
-    if (confirm('¿Estás seguro de reiniciar todo tu progreso?')) {
-      resetProgress();
-      toast.info('Progreso reiniciado');
-    }
+    resetProgress();
+    toast.info('Progreso reiniciado');
   };
 
   const renderModule = () => {
