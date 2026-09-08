@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import { modules } from '@/data/exercises';
-import { Check, Lock, Play, RotateCcw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Check, Lock, Play } from 'lucide-react';
+import { ResetProgressDialog } from '@/components/ResetProgressDialog';
 
 interface SidebarProps {
   currentModule: string;
