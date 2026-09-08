@@ -111,6 +111,19 @@ export function Sidebar({ currentModule, completedExercises, onModuleSelect, onR
           })}
         </nav>
 
+        {/* Reset progress */}
+        {onResetProgress && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onResetProgress}
+            className="mt-4 w-full text-muted-foreground hover:text-destructive hover:border-destructive"
+          >
+            <RotateCcw className="h-4 w-4" />
+            Reiniciar avances
+          </Button>
+        )}
+
         {/* Author info */}
         <div className="mt-4 rounded-lg border border-border bg-secondary/30 p-3">
           <p className="text-xs text-muted-foreground leading-relaxed">
