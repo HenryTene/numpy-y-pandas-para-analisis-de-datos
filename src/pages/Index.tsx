@@ -111,6 +111,7 @@ const Index = () => {
           currentModule={progress.currentModule}
           completedExercises={progress.completedExercises}
           onModuleSelect={setCurrentModule}
+          onResetProgress={handleResetProgress}
         />
         
         <main className="flex-1 p-6 lg:p-8">
