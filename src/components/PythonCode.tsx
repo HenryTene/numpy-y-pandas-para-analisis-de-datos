@@ -92,7 +92,7 @@ export function PythonCode({
   lineNotes?.forEach(n => notesByLine.set(n.line, n.note));
 
   return (
-    <div className="rounded-lg bg-code-bg overflow-hidden border border-border/40">
+    <div className="w-full min-w-0 max-w-full rounded-lg bg-code-bg overflow-hidden border border-border/40">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-2 border-b border-border/50 bg-background/30">
         <span className="text-xs font-medium text-muted-foreground">{title}</span>
@@ -107,8 +107,8 @@ export function PythonCode({
       </div>
 
       {/* Code body */}
-      <div className="overflow-x-auto">
-        <pre className="p-4 text-sm font-mono leading-relaxed">
+      <div className="w-full min-w-0 overflow-x-auto overscroll-x-contain">
+        <pre className="min-w-max p-4 text-sm font-mono leading-relaxed">
           {lines.map((line, idx) => {
             const lineNum = idx + 1;
             const cIdx = commentStart(line);

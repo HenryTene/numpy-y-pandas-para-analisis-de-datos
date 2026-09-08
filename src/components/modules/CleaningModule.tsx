@@ -127,7 +127,7 @@ print(df['cliente_email'].head())`,
   const allCompleted = completedSteps.length === checklistItems.length;
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="min-w-0 max-w-full space-y-8 animate-fade-in">
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-warning/10 border border-warning/30 mb-4">
@@ -144,7 +144,7 @@ print(df['cliente_email'].head())`,
       </div>
 
       {/* Dataset info */}
-      <div className="rounded-2xl border border-border bg-card p-6">
+      <div className="min-w-0 max-w-full overflow-hidden rounded-2xl border border-border bg-card p-4 sm:p-6">
         <h2 className="text-xl font-semibold mb-4">📊 Dataset de práctica</h2>
         <div className="grid sm:grid-cols-2 gap-6">
           <div>
@@ -170,8 +170,8 @@ print(df['cliente_email'].head())`,
         </div>
 
         {/* Sample data table */}
-        <div className="mt-6 overflow-x-auto">
-          <table className="w-full text-sm">
+        <div className="mt-6 max-w-full overflow-x-auto overscroll-x-contain">
+          <table className="min-w-max text-sm">
             <thead>
               <tr className="border-b border-border">
                 {['order_id', 'fecha', 'producto', 'precio', 'ciudad', 'cliente_email'].map(col => (
@@ -207,23 +207,23 @@ print(df['cliente_email'].head())`,
             <div
               key={item.id}
               className={cn(
-                'rounded-2xl border transition-all duration-300',
+                'min-w-0 max-w-full overflow-hidden rounded-2xl border transition-all duration-300',
                 isCompleted ? 'border-success/30 bg-success/5' : 'border-border bg-card'
               )}
             >
               <button
                 onClick={() => toggleStep(item.id)}
-                className="w-full p-6 text-left"
+                className="block w-full min-w-0 max-w-full overflow-hidden p-4 text-left sm:p-6"
               >
-                <div className="flex items-start gap-4">
+                <div className="flex min-w-0 items-start gap-3 sm:gap-4">
                   <div className={cn(
-                    'flex h-10 w-10 items-center justify-center rounded-xl transition-colors',
+                    'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-colors',
                     isCompleted ? 'bg-success text-success-foreground' : 'bg-secondary text-muted-foreground'
                   )}>
                     {isCompleted ? <Check className="h-5 w-5" /> : <Icon className="h-5 w-5" />}
                   </div>
                   
-                  <div className="flex-1">
+                  <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-sm text-muted-foreground">Paso {index + 1}</span>
                       {isCompleted && <Badge className="bg-success/20 text-success border-0">Completado</Badge>}
@@ -240,7 +240,7 @@ print(df['cliente_email'].head())`,
                     </div>
                     
                     {/* Code example */}
-                    <div className="mt-4">
+                    <div className="mt-4 min-w-0 max-w-full overflow-hidden">
                       <PythonCode code={item.code} lineNotes={item.lineNotes} />
                     </div>
                   </div>

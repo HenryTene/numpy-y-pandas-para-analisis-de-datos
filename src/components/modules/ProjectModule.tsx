@@ -162,7 +162,7 @@ print(outliers[['producto', 'precio']])`,
   const allCompleted = completedTasks.length === tasks.length;
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="min-w-0 max-w-full space-y-8 animate-fade-in">
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/30 mb-4">
@@ -220,23 +220,23 @@ print(outliers[['producto', 'precio']])`,
             <div
               key={task.id}
               className={cn(
-                'rounded-2xl border transition-all duration-300',
+                'min-w-0 max-w-full overflow-hidden rounded-2xl border transition-all duration-300',
                 isCompleted ? 'border-success/30 bg-success/5' : 'border-border bg-card'
               )}
             >
               <button
                 onClick={() => toggleTask(task.id)}
-                className="w-full p-6 text-left"
+                className="block w-full min-w-0 max-w-full overflow-hidden p-4 text-left sm:p-6"
               >
-                <div className="flex items-start gap-4">
+                <div className="flex min-w-0 items-start gap-3 sm:gap-4">
                   <div className={cn(
-                    'flex h-10 w-10 items-center justify-center rounded-xl font-semibold transition-colors',
+                    'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl font-semibold transition-colors',
                     isCompleted ? 'bg-success text-success-foreground' : 'bg-secondary text-foreground'
                   )}>
                     {isCompleted ? <Check className="h-5 w-5" /> : index + 1}
                   </div>
                   
-                  <div className="flex-1">
+                  <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       {task.id.startsWith('insight') && (
                         <TrendingUp className="h-4 w-4 text-accent" />
@@ -247,7 +247,7 @@ print(outliers[['producto', 'precio']])`,
                     <p className="text-muted-foreground">{task.description}</p>
                     
                     {/* Code */}
-                    <div className="mt-4">
+                    <div className="mt-4 min-w-0 max-w-full overflow-hidden">
                       <PythonCode code={task.code} lineNotes={task.lineNotes} />
                     </div>
                   </div>
