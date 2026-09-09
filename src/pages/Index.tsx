@@ -104,7 +104,7 @@ const Index = () => {
         levelProgress={levelProgress}
       />
       
-      <div className="flex">
+      <div className="flex min-w-0">
         <Sidebar
           currentModule={progress.currentModule}
           completedExercises={progress.completedExercises}
@@ -112,8 +112,8 @@ const Index = () => {
           onResetProgress={handleResetProgress}
         />
         
-        <main className="flex-1 p-6 lg:p-8">
-          <div className="max-w-4xl mx-auto">
+        <main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
+          <div className="mx-auto min-w-0 max-w-4xl">
             {renderModule()}
           </div>
         </main>
