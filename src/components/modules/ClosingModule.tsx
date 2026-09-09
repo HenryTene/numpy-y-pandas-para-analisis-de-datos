@@ -53,7 +53,7 @@ export function ClosingModule({
     {
       title: 'SQL para consultas avanzadas',
       description: 'Combina Pandas con bases de datos relacionales',
-      link: 'https://www.postgresql.org/docs/current/tutorial-sql.html',
+      link: 'https://learn.microsoft.com/es-es/training/paths/get-started-querying-with-transact-sql/',
     },
   ];
 
